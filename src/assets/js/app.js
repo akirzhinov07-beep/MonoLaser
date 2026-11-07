@@ -76,11 +76,9 @@
   // запоминаем город
   var current = document.body.getAttribute('data-city');
   if (current) store.set('mono_city', current);
-  var remember = $('.home__remember'), saved = store.get('mono_city');
-  if (remember && saved) {
-    var link = $('.row[data-city="' + saved + '"]');
-    if (link) { var a = $('a', remember); a.href = link.getAttribute('href'); a.textContent = $('.row__name', link).textContent; remember.hidden = false; }
-  }
+  var saved = store.get('mono_city');
+  var savedCard = saved && $('.pick__card[data-city="' + saved + '"]');
+  if (savedCard) { savedCard.classList.add('is-saved'); $('.pick__badge', savedCard).hidden = false; }
 
   // цели Метрики
   $$('.js-book').forEach(function (el) { el.addEventListener('click', function () { goal('booking_click'); }); });
@@ -104,6 +102,8 @@
       M.animate($$('[data-enter]', hero), { opacity: [0, 1], y: [18, 0] }, { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: M.stagger(0.1, { startDelay: 0.45 }) });
       var mono = $$('[data-mono] span', hero);
       if (mono.length) M.animate(mono, { opacity: [0, 1], y: ['30%', '0%'], rotate: [-6, 0] }, { type: M.spring, visualDuration: 0.9, bounce: 0.25, delay: M.stagger(0.08, { startDelay: 0.1 }) });
+      var picks = $$('.pick__card', hero);
+      if (picks.length) M.animate(picks, { opacity: [0, 1], y: [40, 0], scale: [0.96, 1] }, { type: M.spring, visualDuration: 0.7, bounce: 0.2, delay: M.stagger(0.07, { startDelay: 0.5 }) });
       var disc = $('[data-disc]', hero);
       if (disc) M.animate(disc, { opacity: [0, 1], scale: [0.7, 1] }, { type: M.spring, visualDuration: 1.1, bounce: 0.2, delay: 0.15 });
       $$('[data-orb]', hero).forEach(function (o, i) {
@@ -148,7 +148,7 @@
       M.scroll(M.animate(g, { rotate: [-40, 140] }, { ease: 'linear' }), { target: g, offset: ['start end', 'end start'] });
     });
     // отклик кнопок
-    M.press('.btn, .row, .faq__q', function (el) {
+    M.press('.btn, .row, .faq__q, .pick__card', function (el) {
       M.animate(el, { scale: 0.97 }, { duration: 0.1 });
       return function () { M.animate(el, { scale: 1 }, SNAP); };
     });

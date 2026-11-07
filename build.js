@@ -372,24 +372,20 @@ ${header(null)}
     ${glyph('petals', 'orb orb--1', 'data-orb="1"')}${glyph('flower', 'orb orb--2', 'data-orb="2"')}${glyph('star', 'orb orb--3', 'data-orb="3"')}
   </div>
   <div class="wrap hero__in">
-    <div class="home__h"><div class="home__mono" data-mono aria-hidden="true">${'MONO'.split('').map(l => `<span>${l}</span>`).join('')}</div><h1 class="home__sub" data-enter>Студии лазерной эпиляции<span class="vh"> MONO</span></h1></div>
-    <p class="hero__lead" data-enter>${total} студий в ${site.cities.length} городах. Выберите свой, и мы покажем адрес, цены и время для записи.</p>
-  </div>
-</section>
-
-
-<section class="sec sec--cities" id="cities" aria-labelledby="h-cities">
-  <div class="wrap">
-    <h2 class="h2" id="h-cities" data-split>Выберите город</h2>
-    <ul class="rows rows--big">
-      ${site.cities.map(c => `<li><a class="row" href="/${c.slug}/" data-city="${c.slug}">
-        <span class="row__name">${esc(c.name)}</span>
-        <span class="row__addr">${esc(addrLine(c))}</span>
-        <span class="row__from">от ${rub(minPrice(site.price_lists[c.price_list]))}</span>
+    <div class="home__h">
+      <div class="home__mono" data-mono aria-hidden="true">${'MONO'.split('').map(l => `<span>${l}</span>`).join('')}</div>
+      <h1 class="home__sub" data-enter>Студии лазерной эпиляции<span class="vh"> MONO</span></h1>
+    </div>
+    <p class="home__ask" data-enter id="cities">В каком городе вам удобно?</p>
+    <ul class="pick" aria-labelledby="cities">
+      ${site.cities.map(c => `<li><a class="pick__card" href="/${c.slug}/" data-city="${c.slug}">
+        <span class="pick__badge" hidden>Вы выбирали</span>
+        <span class="pick__name">${esc(c.name)}</span>
+        <span class="pick__addr">${esc(addrLine(c))}</span>
+        <span class="pick__foot"><span class="pick__from">зоны от ${rub(minPrice(site.price_lists[c.price_list]))}</span><span class="pick__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
       </a></li>`).join('')}
     </ul>
-    <p class="home__remember" hidden>Вы смотрели <a href="#"></a></p>
-    <p class="home__former">В Махачкале, Нальчике и Владикавказе мы раньше назывались Just beauty bar: те же студии и мастера, новое имя.</p>
+    <p class="home__former" data-enter>В Махачкале, Нальчике и Владикавказе мы раньше назывались Just beauty bar: те же студии и мастера, новое имя.</p>
   </div>
 </section>
 
@@ -407,7 +403,6 @@ ${header(null)}
 ${faqBlock()}
 </main>
 ${footer()}
-${mobileBar(null)}
 <script src="/assets/js/motion.min.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 </body>

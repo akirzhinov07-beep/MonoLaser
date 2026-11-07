@@ -376,3 +376,39 @@ p,li{text-wrap:pretty}
 .foot__legal{color:var(--ink-2)}
 .sum__note{color:var(--ink-2)}
 ::selection{background:var(--sky);color:var(--ink)}
+
+/* стартовая страница: выбор города */
+.hero--home{min-height:100svh;align-items:center;padding:110px 0 56px}
+.hero--home .home__mono{font-size:clamp(110px,17vw,250px)}
+.hero--home .home__sub{font-size:clamp(22px,2.6vw,36px);margin-top:clamp(8px,1.2vw,16px)}
+.home__ask{margin-top:clamp(28px,3.4vw,48px);font:600 clamp(18px,1.6vw,22px)/1.2 var(--display);letter-spacing:-.03em}
+.pick{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.pick__card{position:relative;display:flex;flex-direction:column;gap:8px;height:100%;min-height:190px;padding:22px 20px 18px;background:#fff;border-radius:24px;text-decoration:none;box-shadow:0 1px 0 rgba(42,32,28,.05);transition:box-shadow .4s var(--ease),transform .4s var(--ease),background .3s;will-change:transform}
+.pick__card:hover{transform:translateY(-6px);box-shadow:0 28px 40px -24px rgba(140,100,20,.55)}
+.pick__card.is-saved{box-shadow:inset 0 0 0 2px var(--ink)}
+.pick__badge{position:absolute;top:-10px;left:18px;background:var(--ink);color:#fff;font-size:12px;font-weight:500;padding:4px 10px;border-radius:8px}
+.pick__name{font:600 clamp(20px,1.8vw,26px)/1.05 var(--display);letter-spacing:-.04em}
+.pick__addr{font-size:14px;color:var(--ink-2)}
+.pick__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px}
+.pick__from{font-weight:500;font-size:15px}
+.pick__go{width:38px;height:38px;border-radius:50%;background:var(--sky);display:grid;place-items:center;flex:none;transition:background .3s,transform .4s var(--ease)}
+.pick__go svg{width:18px;height:18px}
+.pick__card:hover .pick__go{background:var(--ink);color:#fff;transform:translateX(3px)}
+.hero--home .home__former{margin-top:22px;font-size:14px;color:var(--ink-2)}
+.js .pick__card{opacity:0;animation:failsafe .01s 2.5s forwards}
+.mo .pick__card{animation:none}.nomo .pick__card{opacity:1}
+@media (max-width:1060px){.pick{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:760px){
+  .hero--home{padding:84px 0 40px;min-height:auto}
+  .hero--home .home__mono{font-size:30vw}
+  .pick{grid-template-columns:1fr;gap:10px}
+  .pick__card{min-height:0;display:grid;grid-template-columns:1fr auto;grid-template-areas:"name go" "addr go" "from go";gap:2px 12px;padding:16px 16px 16px 20px;border-radius:20px}
+  .pick__name{grid-area:name}.pick__addr{grid-area:addr;font-size:13px}.pick__foot{display:contents}.pick__from{grid-area:from;font-size:14px;margin-top:4px}.pick__go{grid-area:go;align-self:center}
+}
+@media (prefers-reduced-motion:reduce){.js .pick__card{opacity:1}}
+@media (max-width:760px){
+  .home{--mbar:0px}
+  .pick li:has(.is-saved){margin-top:8px}
+  .pick__card.is-saved{padding-top:22px}
+  .hero--home .orb--1{bottom:auto;top:12%;right:-14px;width:64px}
+}
