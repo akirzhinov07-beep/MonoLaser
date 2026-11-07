@@ -173,6 +173,19 @@ const faqBlock = () => `<section class="sec sec--faq" id="faq" aria-labelledby="
   </div>
 </section>`;
 
+
+// ---------- блок доверия ----------
+function trustBand() {
+  const total = site.cities.reduce((n, c) => n + c.studios.length, 0);
+  const fill = t => t.replace('{studios}', total).replace('{cities}', site.cities.length);
+  const g = ['flower', 'star', 'petals', 'star'];
+  return `<section class="trust" aria-label="Почему MONO">
+  <ul class="wrap trust__list">
+    ${(site.trust || []).map((t, i) => `<li class="trust__item" data-reveal>${glyph(g[i % 4], 'trust__g')}<p class="trust__big">${esc(fill(t.big))}</p><p class="trust__small">${esc(fill(t.small))}</p></li>`).join('')}
+  </ul>
+</section>`;
+}
+
 // ---------- прайс ----------
 const SIZE_ORDER = ['large', 'medium', 'small'];
 function priceBoard(pl) {
@@ -290,6 +303,7 @@ ${header(c)}
   </div>
 </section>
 
+${trustBand()}
 
 <section class="sec sec--prices" id="prices" aria-labelledby="h-prices">
   <div class="wrap">
@@ -395,6 +409,8 @@ ${header(null)}
     <p class="home__former" data-enter>В Махачкале, Нальчике и Владикавказе мы раньше назывались Just beauty bar: те же студии и мастера, новое имя.</p>
   </div>
 </section>
+
+${trustBand()}
 
 <section class="sec sec--pillars" aria-labelledby="h-why">
   <div class="wrap">

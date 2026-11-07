@@ -432,3 +432,14 @@ p,li{text-wrap:pretty}
 .pt .logo{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(80px,14vw,200px);color:#fff;opacity:0}
 @media (max-width:1060px){.visit__shape{display:none}.glow{display:none}}
 @media (prefers-reduced-motion:reduce){.space,.glow,.laser{display:none}}
+
+/* блок доверия */
+.trust{background:#fff;padding:clamp(40px,5vw,72px) 0;border-bottom:1px solid var(--line)}
+.trust__list{list-style:none;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.4vw,32px)}
+.trust__item{position:relative;padding-top:56px}
+.trust__g{position:absolute;top:0;left:0;width:40px;height:40px;color:var(--sky)}
+.trust__item:nth-child(odd) .trust__g{color:var(--butter)}
+.trust__big{font:600 clamp(24px,2.6vw,38px)/1.02 var(--display);letter-spacing:-.045em}
+.trust__small{margin-top:8px;color:var(--ink-2);max-width:16em}
+@media (max-width:1060px){.trust__list{grid-template-columns:1fr 1fr;row-gap:36px}}
+@media (max-width:420px){.trust__big{font-size:22px}}
