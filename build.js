@@ -8,6 +8,7 @@ const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/site.json'), 'utf8
 const D = site.domain.replace(/\/$/, '');
 const today = new Date().toISOString().slice(0, 10);
 
+const addrNb = s => String(s).replace(/(ул\.|пр\.|просп\.|м\.) /g, '$1\u00a0');
 const esc = (s = '') => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const rub = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
 const tel = p => p.replace(/[^\d+]/g, '');
@@ -247,21 +248,15 @@ function cityPage(c) {
   const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: site.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 
 
-  const photos = c.studios.flatMap(st => st.photos || []);
-  const bubbles = (photos.length ? photos : [{ t: 'Ресепшен' }, { t: 'Кабинет' }, { t: 'Лазер' }, { t: 'Зона отдыха' }]).map((p, i) => `<li class="bub bub--${i % 4}">
-      <span class="bub__ring">${p.file ? `<img src="/assets/img/${c.slug}/${p.file}" alt="${esc(p.alt || `Студия ${site.brand} ${c.in}`)}" loading="lazy" decoding="async">` : glyph(['petals', 'flower', 'star', 'petals'][i % 4], 'bub__g')}</span>
-      <span class="bub__t">${esc(p.t || p.alt || 'Студия')}</span>
-    </li>`).join('');
 
   const studios = c.studios.map((st, i) => `<article class="st${n > 1 ? ' st--half' : ''}" data-reveal>
     <div class="st__text">
       ${n > 1 ? `<p class="st__no">Студия ${i + 1}</p>` : ''}
-      <h3 class="st__addr">${isTodo(st.address) ? 'Адрес скоро появится' : esc(st.address)}</h3>
+      <h3 class="st__addr">${isTodo(st.address) ? 'Адрес скоро появится' : esc(addrNb(st.address))}</h3>
       <p class="st__meta">${esc(c.name)}${st.metro && !isTodo(st.metro) ? `, ${esc(st.metro)}` : ''}${isTodo(c.hours) ? '' : ` · ${esc(c.hours)}`}</p>
       ${isTodo(st.directions) ? '' : `<p class="st__dir">${esc(st.directions)}</p>`}
       <div class="st__btns">
-        <a class="btn btn--ink" href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}Маршрут на машине</a>
-        <a class="btn btn--line" href="${routeUrl(c, st, 'mt')}" target="_blank" rel="noopener">${icon.bus}Общественный транспорт</a>
+        <a class="btn btn--ink" href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}Построить маршрут</a>
       </div>
     </div>
     <div class="st__map"><iframe title="Карта: ${site.brand}, ${esc(isTodo(st.address) ? c.name : fullAddr(c, st))}" src="${mapSrc(c, st)}" loading="lazy" allowfullscreen></iframe></div>
@@ -337,9 +332,8 @@ ${trustBand()}
   <div class="wrap">
     <div class="sec__head">
       <h2 class="h2" id="h-where" data-split>${n > 1 ? `${n} студии ${esc(c.in)}` : `Студия ${esc(c.in)}`}</h2>
-      <p>Постройте маршрут в Яндекс Картах — на машине или общественном транспорте.</p>
+      <p>Нажмите «Построить маршрут» — Яндекс Карты проложат путь до студии.</p>
     </div>
-    <ul class="bubs" data-reveal>${bubbles}</ul>
     <div class="sts">${studios}</div>
   </div>
 </section>
