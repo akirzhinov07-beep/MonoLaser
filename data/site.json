@@ -281,13 +281,15 @@
       "hours_schema": "Mo-Su 10:00-21:00",
       "studios": [
         {
-          "address": "TODO: улица, дом",
+          "address": "ул. Куйбышева, 48",
           "metro": "",
-          "directions": "",
+          "directions": "2 этаж, офис 1.",
           "lat": null,
           "lon": null,
-          "yandex_org_id": "",
-          "photos": []
+          "yandex_org_id": "206643595645",
+          "photos": [],
+          "rating": "4,9",
+          "ratings_count": 30
         }
       ]
     }
