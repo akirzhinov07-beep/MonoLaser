@@ -269,6 +269,15 @@
           "photos": [],
           "rating": "5,0",
           "ratings_count": 46
+        },
+        {
+          "address": "ул. Тлостанова, 32",
+          "metro": "",
+          "directions": "ЖК «Эсфера».",
+          "lat": null,
+          "lon": null,
+          "yandex_org_id": "",
+          "photos": []
         }
       ]
     },
