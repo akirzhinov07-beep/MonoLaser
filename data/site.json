@@ -156,13 +156,15 @@
       "hours_schema": "Mo-Su 10:00-21:00",
       "studios": [
         {
-          "address": "TODO: улица, дом",
-          "metro": "TODO: м. Станция",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "address": "Садовническая ул., 5",
+          "metro": "",
+          "directions": "Бьюти-центр Paradise Place, 3 этаж, офис 61.",
           "lat": null,
           "lon": null,
-          "yandex_org_id": "",
-          "photos": []
+          "yandex_org_id": "12152800261",
+          "photos": [],
+          "rating": "5,0",
+          "ratings_count": 60
         }
       ]
     },
@@ -183,7 +185,7 @@
         {
           "address": "TODO: адрес студии 1",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",
@@ -192,7 +194,7 @@
         {
           "address": "TODO: адрес студии 2",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",
@@ -217,7 +219,7 @@
         {
           "address": "ул. М. Магомеджанова, 31а",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",
@@ -226,13 +228,16 @@
         {
           "address": "ул. Ленина, 82",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",
           "photos": []
         }
-      ]
+      ],
+      "reviews_org_id": "144523658905",
+      "reviews_rating": "4,8",
+      "reviews_count": 22
     },
     {
       "slug": "nalchik",
@@ -249,13 +254,15 @@
       "hours_schema": "Mo-Su 10:00-21:00",
       "studios": [
         {
-          "address": "TODO: улица, дом",
+          "address": "пр. Ленина, 18А",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "Вход с улицы Кешокова.",
           "lat": null,
           "lon": null,
-          "yandex_org_id": "",
-          "photos": []
+          "yandex_org_id": "204168719478",
+          "photos": [],
+          "rating": "5,0",
+          "ratings_count": 46
         }
       ]
     },
@@ -276,7 +283,7 @@
         {
           "address": "TODO: улица, дом",
           "metro": "",
-          "directions": "TODO: ориентиры, вход, этаж, парковка.",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",

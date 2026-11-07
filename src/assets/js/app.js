@@ -137,6 +137,8 @@
     $$('[data-reveal]').forEach(function (el) {
       M.inView(el, function () {
         M.animate(el, { opacity: [0, 1], y: [28, 0] }, { duration: 0.8, ease: [0.16, 1, 0.3, 1] });
+        var items = $$('.zc__list li, .cx__tile', el);
+        if (items.length) M.animate(items, { opacity: [0, 1], y: [14, 0] }, { duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: M.stagger(0.04, { startDelay: 0.15 }) });
         var kids = $$('.bub', el);
         if (kids.length) M.animate(kids, { opacity: [0, 1], scale: [0.6, 1] }, { type: M.spring, visualDuration: 0.6, bounce: 0.4, delay: M.stagger(0.07) });
       }, { amount: 0.2 });
@@ -146,7 +148,7 @@
       M.scroll(M.animate(g, { rotate: [-40, 140] }, { ease: 'linear' }), { target: g, offset: ['start end', 'end start'] });
     });
     // отклик кнопок
-    M.press('.btn, .chip, .row, .faq__q', function (el) {
+    M.press('.btn, .row, .faq__q', function (el) {
       M.animate(el, { scale: 0.97 }, { duration: 0.1 });
       return function () { M.animate(el, { scale: 1 }, SNAP); };
     });
@@ -176,91 +178,4 @@
     setStep(0);
   }
 
-  // ---------- конструктор цен ----------
-  var pb = $('.pb');
-  if (!pb) return;
-  var cfg = JSON.parse(pb.getAttribute('data-pricelist'));
-  var chips = $$('.chip', pb);
-  var sum = $('.sum'), list = $('.sum__list', sum), totalEl = $('.sum__total b', sum), strike = $('.sum__total s', sum), note = $('.sum__note', sum), empty = $('.sum__empty', sum);
-  var tray = $('.tray'), trayIn = $('.tray__in', tray);
-  var FACE_PARTS = ['Верхняя губа', 'Бакенбарды', 'Подбородок', 'Лоб'];
-  var shown = 0, raf = 0;
-
-  function countTo(els, to) {
-    if (!MO) { els.forEach(function (el) { el.textContent = rub(to); }); shown = to; return; }
-    var from = shown, t0 = performance.now(), d = 420; cancelAnimationFrame(raf);
-    (function step(t) {
-      var k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 4), v = Math.round((from + (to - from) * e) / 10) * 10;
-      els.forEach(function (el) { el.textContent = rub(k < 1 ? v : to); });
-      if (k < 1) raf = requestAnimationFrame(step);
-    })(t0);
-    shown = to;
-  }
-
-  function compute() {
-    var sel = chips.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })
-      .map(function (b) { return { size: b.dataset.size, price: +b.dataset.price, name: b.dataset.name }; });
-    var body = sel.filter(function (z) { return z.size !== 'face'; });
-    var face = sel.filter(function (z) { return z.size === 'face'; });
-    var full = sel.reduce(function (s, z) { return s + z.price; }, 0);
-    var sumBody = body.reduce(function (s, z) { return s + z.price; }, 0);
-    var n = body.length, complex = null, msg = '';
-    if (n >= 2 && cfg.complexes[n]) complex = cfg.complexes[n];
-    else if (n > 4 && cfg.extra) {
-      var sorted = body.slice().sort(function (a, b) { return b.price - a.price; });
-      complex = cfg.complexes[4] + sorted.slice(4).reduce(function (s, z) { return s + cfg.extra[z.size]; }, 0);
-    }
-    var best = sumBody;
-    if (complex !== null && complex < sumBody) { best = complex; msg = 'Цена комплекса из ' + n + ' ' + plural(n, 'зоны', 'зон', 'зон'); }
-    var total = best + face.reduce(function (s, z) { return s + z.price; }, 0);
-    var fp = body.filter(function (z) { return FACE_PARTS.indexOf(z.name) > -1; });
-    if (!face.length && fp.length >= 2 && fp.reduce(function (s, z) { return s + z.price; }, 0) > cfg.face) msg = (msg ? msg + '. ' : '') + '«Лицо полностью» — ' + rub(cfg.face);
-    if (total > cfg.unlimited) { total = cfg.unlimited; msg = 'Выгоднее «Всё тело без ограничений»'; }
-    return { sel: sel, full: full, total: total, msg: msg };
-  }
-
-  function render(changed, added) {
-    var r = compute();
-    sum.classList.toggle('is-empty', !r.sel.length);
-    empty.hidden = !!r.sel.length;
-    // список
-    if (added) {
-      var li = document.createElement('li'); li.dataset.name = changed.dataset.name;
-      li.innerHTML = '<span></span><span></span>';
-      li.firstChild.textContent = changed.dataset.name; li.lastChild.textContent = rub(+changed.dataset.price);
-      list.appendChild(li);
-      if (MO) M.animate(li, { opacity: [0, 1], y: [10, 0], scale: [0.96, 1] }, SNAP);
-    } else if (changed) {
-      $$('li', list).forEach(function (li) {
-        if (li.dataset.name !== changed.dataset.name) return;
-        if (!MO) return li.remove();
-        M.animate(li, { opacity: 0, x: 20 }, { duration: 0.18 }).finished.then(function () { li.remove(); });
-      });
-    }
-    countTo([totalEl, $('.tray__total b', tray)], r.total);
-    var s = r.full > r.total ? rub(r.full) : '';
-    strike.textContent = s; $('.tray__total s', tray).textContent = s;
-    note.textContent = r.msg;
-    $('.tray__count', tray).textContent = r.sel.length ? r.sel.length + ' ' + plural(r.sel.length, 'зона', 'зоны', 'зон') + (r.msg ? ' · ' + r.msg.toLowerCase() : '') : '';
-    if (r.sel.length) {
-      if (tray.hidden) { tray.hidden = false; if (MO) M.animate(trayIn, { opacity: [0, 1], y: [30, 0], scale: [0.96, 1] }, SNAP); }
-      if (MO) M.animate(totalEl, { scale: [1.06, 1] }, SNAP);
-    } else if (!tray.hidden) {
-      if (MO) M.animate(trayIn, { opacity: 0, y: 30, scale: 0.96 }, { duration: 0.18 }).finished.then(function () { if (!compute().sel.length) tray.hidden = true; });
-      else tray.hidden = true;
-    }
-  }
-
-  chips.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var on = b.getAttribute('aria-pressed') !== 'true';
-      b.setAttribute('aria-pressed', String(on));
-      render(b, on);
-    });
-  });
-  $('.sum__clear').addEventListener('click', function () {
-    chips.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-    list.innerHTML = ''; render(null, false);
-  });
-  render(null, false);
 })();

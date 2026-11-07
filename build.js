@@ -178,61 +178,32 @@ const faqBlock = () => `<section class="sec sec--faq" id="faq" aria-labelledby="
   </div>
 </section>`;
 
-// ---------- прайс-конструктор ----------
+// ---------- прайс ----------
 const SIZE_ORDER = ['large', 'medium', 'small'];
-function priceBuilder(pl, c) {
-  const group = key => {
+function priceBoard(pl) {
+  const zone = (key, i) => {
     const z = pl.zones[key];
-    return `<div class="pg pg--${key}">
-      <div class="pg__head"><h3>${z.title}</h3><p>${rub(z.price)} за зону</p></div>
-      <ul class="chips">
-        ${z.items.map(i => `<li><button type="button" class="chip" aria-pressed="false" data-size="${key}" data-price="${z.price}" data-name="${esc(i)}"><span class="chip__dot" aria-hidden="true"></span>${esc(i)}</button></li>`).join('')}
-      </ul>
-    </div>`;
+    return `<article class="zc zc--${key}" data-reveal>
+      ${glyph(['petals', 'flower', 'star'][i], 'zc__g', 'data-spin')}
+      <header class="zc__head"><h3>${z.title}</h3><p class="zc__price">${rub(z.price)}</p><p class="zc__per">за одну зону</p></header>
+      <ul class="zc__list">${z.items.map(it => `<li>${esc(it)}</li>`).join('')}</ul>
+    </article>`;
   };
-  const cfg = { complexes: pl.complexes, extra: pl.extra_zone, face: pl.face, unlimited: pl.packages[pl.packages.length - 1].price };
-  return `<div class="pb" data-pricelist='${JSON.stringify(cfg)}'>
-    <div class="pb__groups">
-      ${SIZE_ORDER.map(group).join('')}
-      <div class="pg pg--face">
-        <div class="pg__head"><h3>Лицо</h3><p>все зоны лица за один визит</p></div>
-        <ul class="chips"><li><button type="button" class="chip" aria-pressed="false" data-size="face" data-price="${pl.face}" data-name="Лицо полностью"><span class="chip__dot" aria-hidden="true"></span>Лицо полностью · ${rub(pl.face)}</button></li></ul>
-      </div>
-    </div>
-    <aside class="sum" aria-live="polite">
-      <div class="sum__card">
-        <p class="sum__label">Ваш визит</p>
-        <p class="sum__empty">Отметьте зоны слева: посчитаем стоимость и подберём комплекс.</p>
-        <ul class="sum__list"></ul>
-        <div class="sum__foot">
-          <p class="sum__note"></p>
-          <p class="sum__total"><b>0&nbsp;₽</b><s></s></p>
-          <div class="sum__acts">
-            <a class="btn btn--ink btn--block js-book" href="${c.booking_url}" target="_blank" rel="noopener">Записаться на эти зоны</a>
-            <button type="button" class="sum__clear">Сбросить</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-  </div>
+  return `<div class="zcs">${SIZE_ORDER.map(zone).join('')}</div>
   <div class="cx">
-    <div class="cx__grid">
+    <h3 class="cx__h" data-split>Комплексы за один визит</h3>
+    <div class="cx__grid" data-reveal>
       ${Object.entries(pl.complexes).map(([n, p]) => `<div class="cx__tile"><p class="cx__n">${n}<span>зоны</span></p><p class="cx__p">${rub(p)}</p></div>`).join('')}
+      <div class="cx__tile cx__tile--face"><p class="cx__t">Лицо полностью</p><p class="cx__p">${rub(pl.face)}</p></div>
       ${pl.extra_zone ? `<div class="cx__tile cx__tile--extra"><p class="cx__t">Доп. зона к комплексу</p><ul><li>малая <b>+${rub(pl.extra_zone.small)}</b></li><li>средняя <b>+${rub(pl.extra_zone.medium)}</b></li><li>большая <b>+${rub(pl.extra_zone.large)}</b></li></ul></div>` : ''}
     </div>
     <div class="pk">
-      ${pl.packages.map((p, i) => `<div class="pk__card pk__card--${i}">
+      ${pl.packages.map((p, i) => `<div class="pk__card pk__card--${i}" data-reveal>
         ${glyph(i ? 'star' : 'petals', 'pk__g', 'data-spin')}
         <h3 class="pk__name">${esc(p.name)}</h3>
         <p class="pk__price">${rub(p.price)}</p>
         <p class="pk__inc">${esc(p.includes)}</p>
       </div>`).join('')}
-    </div>
-  </div>
-  <div class="tray" hidden>
-    <div class="tray__in">
-      <div class="tray__info"><p class="tray__count"></p><p class="tray__total"><b></b> <s></s></p></div>
-      <a class="btn btn--butter js-book" href="${c.booking_url}" target="_blank" rel="noopener">Записаться</a>
     </div>
   </div>`;
 }
@@ -291,14 +262,14 @@ function cityPage(c) {
     <div class="st__map"><iframe title="Карта: ${site.brand}, ${esc(isTodo(st.address) ? c.name : fullAddr(c, st))}" src="${mapSrc(c, st)}" loading="lazy" allowfullscreen></iframe></div>
   </article>`).join('');
 
-  const reviewOrgs = c.studios.filter(st => st.yandex_org_id);
+  const reviewOrgs = c.reviews_org_id ? [{ yandex_org_id: c.reviews_org_id, rating: c.reviews_rating, ratings_count: c.reviews_count, address: '' }] : c.studios.filter(st => st.yandex_org_id);
   const reviews = reviewOrgs.length
-    ? reviewOrgs.map(st => `${n > 1 ? `<h3 class="rv__h">${esc(st.address)}</h3>` : ''}<div class="rv__frame"><iframe title="Отзывы о ${site.brand} ${c.in} на Яндекс Картах" src="https://yandex.ru/maps-reviews-widget/${st.yandex_org_id}?comments" loading="lazy"></iframe></div>
+    ? reviewOrgs.map(st => `${reviewOrgs.length > 1 && st.address ? `<h3 class="rv__h">${esc(st.address)}</h3>` : ''}${st.rating ? `<p class="rv__score"><b>${st.rating}</b><span>${glyph('star', 'rv__star')}${st.ratings_count} оценок на Яндекс Картах</span></p>` : ''}<div class="rv__frame"><iframe title="Отзывы о ${site.brand} ${c.in} на Яндекс Картах" src="https://yandex.ru/maps-reviews-widget/${st.yandex_org_id}?comments" loading="lazy"></iframe></div>
        <p class="rv__more"><a class="btn btn--line" href="${yaLink(c, st)}reviews/" target="_blank" rel="noopener">Все отзывы и оставить свой</a></p>`).join('')
     : `<div class="rv__empty" data-reveal>${glyph('star', 'rv__g', 'data-spin')}<p>Отзывы клиентов из карточ${n > 1 ? 'ек студий' : 'ки студии'} на Яндекс Картах появятся здесь.</p><a class="btn btn--ink" href="${yaLink(c)}" target="_blank" rel="noopener">Открыть на Яндекс Картах</a></div>`;
 
   const others = site.cities.filter(o => o.slug !== c.slug);
-  const lead = `${n > 1 ? `${n} студии ${c.in}. ` : ''}Зоны от ${rub(from)}, комплексы и «всё тело» за один визит. Запись онлайн за минуту.`;
+  const lead = `${n > 1 ? `${n} студии ${c.in}. ` : ''}Зоны от ${rub(from)}, комплексы и «всё тело» за один визит. Запись онлайн за минуту.${(c.studios.find(st => st.rating) || (c.reviews_rating ? { rating: c.reviews_rating } : null)) ? ` Рейтинг ${(c.studios.find(st => st.rating) || { rating: c.reviews_rating }).rating} на Яндекс Картах.` : ''}`;
 
   return `${head({ title, desc, url, jsonld: [...businesses, crumbs, faq] })}
 <body data-city="${c.slug}">
@@ -316,7 +287,7 @@ ${header(c)}
     <p class="hero__lead" data-enter>${lead}${c.former_name ? `<br><span class="hero__former">Раньше — ${esc(c.former_name)}. Те же мастера, новое имя.</span>` : ''}</p>
     <div class="hero__cta" data-enter>
       <a class="btn btn--ink btn--lg js-book" href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Записаться онлайн</a>
-      <a class="btn btn--glass btn--lg" href="#prices">Посчитать стоимость</a>
+      <a class="btn btn--glass btn--lg" href="#prices">Смотреть цены</a>
     </div>
     <ul class="hero__studios" data-enter>
       ${c.studios.map(st => `<li><a href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}<span>${isTodo(st.address) ? 'Адрес скоро' : esc(st.address)}</span></a></li>`).join('')}
@@ -330,10 +301,10 @@ ${marquee(zonesTicker, 'mq--cocoa')}
 <section class="sec sec--prices" id="prices" aria-labelledby="h-prices">
   <div class="wrap">
     <div class="sec__head">
-      <h2 class="h2" id="h-prices" data-split>Соберите свой визит</h2>
-      <p>Цены ${esc(c.in)} за одну процедуру. Нажимайте на зоны, и сумма и выгодный комплекс посчитаются сами.</p>
+      <h2 class="h2" id="h-prices" data-split>Цены ${esc(c.in)}</h2>
+      <p>Цена указана за одну процедуру. Все зоны делятся на большие, средние и малые: у каждой группы одна цена.</p>
     </div>
-    ${priceBuilder(pl, c)}
+    ${priceBoard(pl)}
   </div>
 </section>
 
