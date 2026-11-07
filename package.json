@@ -1,0 +1,20 @@
+{
+  "name": "mono-laser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "motion": "esbuild src/motion-entry.js --bundle --minify --format=iife --global-name=Motion --outfile=src/assets/js/motion.min.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/onest": "^5.3.1",
+    "@fontsource/unbounded": "^5.3.0",
+    "esbuild": "^0.28.2",
+    "motion": "^14.10.1"
+  }
+}
