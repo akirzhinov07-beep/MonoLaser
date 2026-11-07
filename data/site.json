@@ -152,8 +152,8 @@
       "former_name": null,
       "services": "Лазерная эпиляция и косметология",
       "phone": "",
-      "hours": "TODO: Ежедневно 10:00–21:00",
-      "hours_schema": "Mo-Su 10:00-21:00",
+      "hours": "Ежедневно 09:00–20:00",
+      "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
           "address": "Садовническая ул., 5",
@@ -179,8 +179,8 @@
       "former_name": "Just beauty bar",
       "services": "Лазерная эпиляция",
       "phone": "",
-      "hours": "TODO: Ежедневно 10:00–21:00",
-      "hours_schema": "Mo-Su 10:00-21:00",
+      "hours": "Ежедневно 09:00–20:00",
+      "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
           "address": "TODO: адрес студии 1",
@@ -192,9 +192,9 @@
           "photos": []
         },
         {
-          "address": "TODO: адрес студии 2",
+          "address": "пр. Гамидова, 18Ж",
           "metro": "",
-          "directions": "",
+          "directions": "ТЦ «Вегас», 4 этаж.",
           "lat": null,
           "lon": null,
           "yandex_org_id": "",
@@ -213,8 +213,8 @@
       "former_name": null,
       "services": "Лазерная эпиляция",
       "phone": "",
-      "hours": "TODO: Ежедневно 10:00–21:00",
-      "hours_schema": "Mo-Su 10:00-21:00",
+      "hours": "Ежедневно 09:00–20:00",
+      "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
           "address": "ул. М. Магомеджанова, 31а",
@@ -234,10 +234,7 @@
           "yandex_org_id": "",
           "photos": []
         }
-      ],
-      "reviews_org_id": "144523658905",
-      "reviews_rating": "4,8",
-      "reviews_count": 22
+      ]
     },
     {
       "slug": "nalchik",
@@ -250,8 +247,8 @@
       "former_name": "Just beauty bar",
       "services": "Лазерная эпиляция",
       "phone": "",
-      "hours": "TODO: Ежедневно 10:00–21:00",
-      "hours_schema": "Mo-Su 10:00-21:00",
+      "hours": "Ежедневно 09:00–20:00",
+      "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
           "address": "пр. Ленина, 18А",
@@ -277,8 +274,8 @@
       "former_name": "Just beauty bar",
       "services": "Лазерная эпиляция",
       "phone": "",
-      "hours": "TODO: Ежедневно 10:00–21:00",
-      "hours_schema": "Mo-Su 10:00-21:00",
+      "hours": "Ежедневно 09:00–20:00",
+      "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
           "address": "ул. Куйбышева, 48",
