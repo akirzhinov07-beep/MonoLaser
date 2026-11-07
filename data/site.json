@@ -183,12 +183,12 @@
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
-          "address": "TODO: адрес студии 1",
+          "address": "пр. Имама Шамиля, 184",
           "metro": "",
           "directions": "",
           "lat": null,
           "lon": null,
-          "yandex_org_id": "",
+          "yandex_org_id": "20043730201",
           "photos": []
         },
         {
