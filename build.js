@@ -33,7 +33,7 @@ function write(rel, content) {
 // ---------- фирменные знаки из хайлайтов Instagram ----------
 const G = {
   flower: '<path d="M50 6c9 0 15 9 13 22 13-6 25-2 28 7s-5 18-19 20c10 10 11 22 4 28s-19 2-26-11c-7 13-19 17-26 11s-6-18 4-28C17 53 9 44 12 35s15-13 28-7C38 15 41 6 50 6Z"/>',
-  petals: '<g><ellipse cx="50" cy="24" rx="14" ry="24"/><ellipse cx="50" cy="76" rx="14" ry="24"/><ellipse cx="24" cy="50" rx="24" ry="14"/><ellipse cx="76" cy="50" rx="24" ry="14"/></g>',
+  petals: '<path d="M50 4C62 4 66 28 54 46 72 34 96 38 96 50S72 66 54 54C66 72 62 96 50 96S34 72 46 54C28 66 4 62 4 50S28 34 46 46C34 28 38 4 50 4Z"/>',
   star: '<path d="M50 0 57 37 92 14 64 44 100 50 64 56 92 86 57 63 50 100 43 63 8 86 36 56 0 50 36 44 8 14 43 37Z"/>',
 };
 const glyph = (name, cls = '', attrs = '') => `<svg class="g ${cls}" viewBox="0 0 100 100" aria-hidden="true" ${attrs}>${G[name]}</svg>`;
@@ -266,16 +266,18 @@ function cityPage(c) {
   return `${head({ title, desc, url, jsonld: [...businesses, crumbs, faq] })}
 <body data-city="${c.slug}">
 ${header(c)}
+<div id="smooth-wrapper"><div id="smooth-content">
 <main id="main">
 
 <section class="hero" data-hero>
+  <canvas class="space" data-space aria-hidden="true"></canvas><div class="glow" data-glow aria-hidden="true"></div>
   <div class="hero__art" aria-hidden="true">
     <div class="disc" data-disc>${logo('logo--disc')}</div>
     ${glyph('petals', 'orb orb--1', 'data-orb="1"')}${glyph('flower', 'orb orb--2', 'data-orb="2"')}${glyph('star', 'orb orb--3', 'data-orb="3"')}
   </div>
   <div class="wrap hero__in">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">${site.brand}</a><span aria-hidden="true">/</span><span>${esc(c.name)}</span></nav>
-    <h1 class="hero__h" data-split>Лазерная эпиляция ${esc(c.in).replace(' ', ' ')}</h1>
+    <h1 class="hero__h" data-laser>Лазерная эпиляция ${esc(c.in).replace(' ', ' ')}<span class="laser" aria-hidden="true"></span></h1>
     <p class="hero__lead" data-enter>${lead}${c.former_name ? `<br><span class="hero__former">Раньше — ${esc(c.former_name)}. Те же мастера, новое имя.</span>` : ''}</p>
     <div class="hero__cta" data-enter>
       <a class="btn btn--ink btn--lg js-book" href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Записаться онлайн</a>
@@ -305,7 +307,9 @@ ${header(c)}
       <h2 class="h2" id="h-visit" data-split>Как проходит первый визит</h2>
       <div class="visit__meter" aria-hidden="true"><span class="visit__num" data-visit-num>1</span><span class="visit__of">/ 4</span></div>
       <div class="visit__bar" aria-hidden="true"><span data-visit-bar></span></div>
+      <svg class="visit__shape" viewBox="0 0 100 100" aria-hidden="true"><path data-morph d="M50 6c9 0 15 9 13 22 13-6 25-2 28 7s-5 18-19 20c10 10 11 22 4 28s-19 2-26-11c-7 13-19 17-26 11s-6-18 4-28C17 53 9 44 12 35s15-13 28-7C38 15 41 6 50 6Z"/></svg>
     </div>
+    <svg class="visit__line" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><path data-draw d="M20 0C38 120 2 240 20 360S38 600 20 720 2 900 20 1000"/></svg>
     <ol class="visit__steps">
       <li data-step><h3>Запись</h3><p>Выберите зоны, мастера и время в онлайн-записи. Накануне напомним о визите.</p></li>
       <li data-step><h3>Подготовка</h3><p>Побрейте зону за 1–2 дня. За две недели — без загара, воска и шугаринга.</p></li>
@@ -344,8 +348,9 @@ ${faqBlock()}
 
 </main>
 ${footer()}
+</div></div>
 ${mobileBar(c)}
-<script src="/assets/js/motion.min.js" defer></script>
+<script src="/assets/js/gsap.min.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 </body>
 </html>`;
@@ -366,8 +371,10 @@ function homePage() {
   return `${head({ title, desc, url, jsonld: [org, ws] })}
 <body class="home">
 ${header(null)}
+<div id="smooth-wrapper"><div id="smooth-content">
 <main id="main">
 <section class="hero hero--home" data-hero>
+  <canvas class="space" data-space aria-hidden="true"></canvas><div class="glow" data-glow aria-hidden="true"></div>
   <div class="hero__art" aria-hidden="true">
     ${glyph('petals', 'orb orb--1', 'data-orb="1"')}${glyph('flower', 'orb orb--2', 'data-orb="2"')}${glyph('star', 'orb orb--3', 'data-orb="3"')}
   </div>
@@ -403,7 +410,8 @@ ${header(null)}
 ${faqBlock()}
 </main>
 ${footer()}
-<script src="/assets/js/motion.min.js" defer></script>
+</div></div>
+<script src="/assets/js/gsap.min.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 </body>
 </html>`;
@@ -411,7 +419,7 @@ ${footer()}
 
 function notFound() {
   return `${head({ title: `Страница не найдена | ${site.brand}`, desc: 'Страница не найдена', url: D + '/404.html', noindex: true })}
-<body>${header(null)}<main id="main" class="sec"><div class="wrap nf"><h1 class="h2">Такой страницы нет</h1><p>Возможно, ссылка устарела. Выберите город:</p><ul class="rows">${site.cities.map(o => `<li><a class="row" href="/${o.slug}/"><span class="row__name">${esc(o.name)}</span></a></li>`).join('')}</ul></div></main>${footer()}<script src="/assets/js/motion.min.js" defer></script><script src="/assets/js/app.js" defer></script></body></html>`;
+<body>${header(null)}<main id="main" class="sec"><div class="wrap nf"><h1 class="h2">Такой страницы нет</h1><p>Возможно, ссылка устарела. Выберите город:</p><ul class="rows">${site.cities.map(o => `<li><a class="row" href="/${o.slug}/"><span class="row__name">${esc(o.name)}</span></a></li>`).join('')}</ul></div></main>${footer()}<script src="/assets/js/gsap.min.js" defer></script><script src="/assets/js/app.js" defer></script></body></html>`;
 }
 
 // ---------- сборка ----------
