@@ -126,11 +126,6 @@ function header(city) {
 </header>`;
 }
 
-function marquee(items, cls = '') {
-  const row = items.map(t => `<span class="mq__item">${t}</span>${glyph('flower', 'mq__g')}`).join('');
-  return `<div class="mq ${cls}" aria-hidden="true"><div class="mq__track"><div class="mq__row">${row}</div><div class="mq__row">${row}</div></div></div>`;
-}
-
 function footer() {
   return `<footer class="foot">
   <div class="wrap">
@@ -238,9 +233,6 @@ function cityPage(c) {
     { '@type': 'ListItem', position: 2, name: c.name, item: url }] };
   const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: site.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 
-  const zonesTicker = [];
-  for (const k of SIZE_ORDER) for (const i of pl.zones[k].items.slice(0, 4)) zonesTicker.push(`${i} <b>${rub(pl.zones[k].price)}</b>`);
-  zonesTicker.push(`${pl.packages[pl.packages.length - 1].name} <b>${rub(pl.packages[pl.packages.length - 1].price)}</b>`);
 
   const photos = c.studios.flatMap(st => st.photos || []);
   const bubbles = (photos.length ? photos : [{ t: 'Ресепшен' }, { t: 'Кабинет' }, { t: 'Лазер' }, { t: 'Зона отдыха' }]).map((p, i) => `<li class="bub bub--${i % 4}">
@@ -296,7 +288,6 @@ ${header(c)}
   </div>
 </section>
 
-${marquee(zonesTicker, 'mq--cocoa')}
 
 <section class="sec sec--prices" id="prices" aria-labelledby="h-prices">
   <div class="wrap">
@@ -386,7 +377,6 @@ ${header(null)}
   </div>
 </section>
 
-${marquee(site.cities.map(c => esc(c.name)), 'mq--cocoa mq--big')}
 
 <section class="sec sec--cities" id="cities" aria-labelledby="h-cities">
   <div class="wrap">
@@ -408,7 +398,7 @@ ${marquee(site.cities.map(c => esc(c.name)), 'mq--cocoa mq--big')}
     <h2 class="h2" id="h-why" data-split>Просто и понятно</h2>
     <ul class="pillars">
       <li data-reveal>${glyph('petals', 'pl__g')}<h3>Одна цена за зону</h3><p>Все зоны — малые, средние и большие. Никаких «от» и доплат на месте.</p></li>
-      <li data-reveal>${glyph('flower', 'pl__g')}<h3>Комплексы дешевле</h3><p>Чем больше зон за визит, тем ниже цена каждой. Конструктор на странице города посчитает сам.</p></li>
+      <li data-reveal>${glyph('flower', 'pl__g')}<h3>Комплексы дешевле</h3><p>Чем больше зон за визит, тем ниже цена каждой. Комплексы из 2, 3 и 4 зон и «всё тело».</p></li>
       <li data-reveal>${glyph('star', 'pl__g')}<h3>Запись за минуту</h3><p>Свободное время видно онлайн. Выбрали — администратор подтвердит.</p></li>
     </ul>
   </div>
