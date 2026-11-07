@@ -370,8 +370,8 @@ function homePage() {
   const minAll = Math.min(...Object.values(site.price_lists).map(minPrice));
   const total = site.cities.reduce((n, c) => n + c.studios.length, 0);
   const title = `${site.brand} — студии лазерной эпиляции: ${site.cities.map(c => c.name).join(', ')}`;
-  const desc = `Сеть студий лазерной эпиляции ${site.brand} (ex. Just beauty bar): ${site.cities.map(c => c.name).join(', ')}. Зоны от ${minAll} ₽, комплексы, онлайн-запись.`;
-  const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.brand, url, alternateName: 'Just beauty bar',
+  const desc = `Сеть студий лазерной эпиляции ${site.brand}: ${site.cities.map(c => c.name).join(', ')}. Зоны от ${minAll} ₽, комплексы, онлайн-запись.`;
+  const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.brand, url,
     sameAs: site.cities.map(c => c.instagram),
     subOrganization: site.cities.flatMap(c => c.studios.map((st, i) => ({ '@id': `${D}/${c.slug}/#studio${i ? '-' + (i + 1) : ''}` }))) };
   const ws = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.brand, url, inLanguage: 'ru' };
@@ -400,7 +400,6 @@ ${header(null)}
         <span class="pick__foot"><span class="pick__from">зоны от ${rub(minPrice(site.price_lists[c.price_list]))}</span><span class="pick__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
       </a></li>`).join('')}
     </ul>
-    <p class="home__former" data-enter>В Махачкале, Нальчике и Владикавказе мы раньше назывались Just beauty bar: те же студии и мастера, новое имя.</p>
   </div>
 </section>
 
