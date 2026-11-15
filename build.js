@@ -270,7 +270,18 @@ function cityPage(c) {
         <a class="btn btn--ink" href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}Построить маршрут</a>
       </div>
     </div>
-    <div class="st__map"><iframe title="Карта: ${site.brand}, ${esc(isTodo(st.address) ? c.name : fullAddr(c, st))}" src="${mapSrc(c, st)}" loading="lazy" allowfullscreen></iframe></div>
+    <div class="st__map">
+      <div class="mapph" aria-hidden="true">
+        <svg class="mapph__streets" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="transform:rotate(${(i * 23) % 40 - 12}deg) scale(1.3)">
+          <path class="mapph__river" d="M-20 230C80 200 120 260 220 230S360 170 430 190"/>
+          <path d="M-20 90H430M-20 160H430M60 -20V320M170 -20V320M290 -20V320M-20 20L430 280"/>
+          <path class="mapph__minor" d="M-20 55H430M-20 125H430M-20 200H430M115 -20V320M230 -20V320M345 -20V320"/>
+        </svg>
+        <div class="mapph__pin"><span class="mapph__ring"></span><span class="mapph__ring mapph__ring--2"></span>${glyph('flower', 'mapph__g')}</div>
+        <p class="mapph__label">${isTodo(st.address) ? esc(c.name) : esc(addrNb(st.address))}</p>
+      </div>
+      <iframe title="Карта: ${site.brand}, ${esc(isTodo(st.address) ? c.name : fullAddr(c, st))}" src="${mapSrc(c, st)}" loading="lazy" allowfullscreen></iframe>
+    </div>
   </article>`).join('');
 
   const reviewOrgs = c.reviews_org_id ? [{ yandex_org_id: c.reviews_org_id, rating: c.reviews_rating, ratings_count: c.reviews_count, address: '' }] : c.studios.filter(st => st.yandex_org_id);

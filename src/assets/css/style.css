@@ -492,3 +492,21 @@ p,li{text-wrap:pretty}
 .btn--ink.js-book:hover{box-shadow:0 14px 34px -12px rgba(42,32,28,.55),0 0 0 4px rgba(243,223,162,.55)}
 .btn--ink.js-book:hover::after{animation-duration:1.4s;animation-delay:0s}
 @media (prefers-reduced-motion:reduce){.btn--ink.js-book::after,.mbar__main::after{animation:none;display:none}}
+
+/* подложка карты: видна, пока карта Яндекса не загрузилась */
+.st__map{position:relative;isolation:isolate}
+.st__map iframe{position:absolute;inset:0;z-index:2;background:transparent}
+.mapph{position:absolute;inset:0;z-index:1;overflow:hidden;background:#EEF3FC;display:grid;place-items:center}
+.mapph__streets{position:absolute;inset:-15%;width:130%;height:130%}
+.mapph__streets path{fill:none;stroke:#fff;stroke-width:10;stroke-linecap:round}
+.mapph__streets .mapph__minor{stroke-width:4;stroke:rgba(255,255,255,.8)}
+.mapph__streets .mapph__river{stroke:var(--sky);stroke-width:18;opacity:.7}
+.mapph__pin{position:relative;width:64px;height:64px;border-radius:50%;background:var(--ink);display:grid;place-items:center;box-shadow:0 14px 28px -10px rgba(42,32,28,.6);margin-top:-30px}
+.mapph__pin::after{content:"";position:absolute;bottom:-9px;left:50%;width:18px;height:18px;background:var(--ink);transform:translateX(-50%) rotate(45deg);border-radius:0 0 4px 0;z-index:-1}
+.mapph__g{width:34px;height:34px;color:var(--butter)}
+.mapph__ring{position:absolute;inset:-10px;border-radius:50%;border:2px solid var(--ink);opacity:0;animation:ping 2.6s cubic-bezier(.2,.6,.3,1) infinite}
+.mapph__ring--2{animation-delay:1.3s}
+@keyframes ping{0%{transform:scale(.7);opacity:.5}100%{transform:scale(2.2);opacity:0}}
+.mapph__label{position:absolute;left:50%;top:calc(50% + 34px);transform:translateX(-50%);background:#fff;padding:10px 16px;border-radius:14px;font-weight:600;font-size:15px;white-space:nowrap;box-shadow:0 10px 24px -14px rgba(42,32,28,.45);max-width:90%;overflow:hidden;text-overflow:ellipsis}
+@media (prefers-reduced-motion:reduce){.mapph__ring{animation:none}}
+.rv__frame--ph{display:grid;place-items:center;height:260px;padding:24px;text-align:center;font-weight:500;color:var(--ink-2)}
