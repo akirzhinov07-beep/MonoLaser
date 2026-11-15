@@ -443,3 +443,26 @@ p,li{text-wrap:pretty}
 .trust__small{margin-top:8px;color:var(--ink-2);max-width:16em}
 @media (max-width:1060px){.trust__list{grid-template-columns:1fr 1fr;row-gap:36px}}
 @media (max-width:420px){.trust__big{font-size:22px}}
+
+/* ---- мобильная доводка ---- */
+@media (max-width:760px){
+  .hero__h{font-size:clamp(30px,9vw,52px);letter-spacing:-.04em;overflow-wrap:anywhere}
+  .top__in{gap:6px;padding:0 14px}
+  .top__logo{display:inline-flex;align-items:center;min-height:44px}
+  .city-pick__btn{min-height:44px;padding:0 12px}
+  .city-pick__list a{min-height:46px;align-items:center}
+  .crumbs a{display:inline-flex;align-items:center;min-height:32px}
+  .foot__cities a{min-height:40px}
+  .foot__city{font-size:18px}
+  .hero__studios a{min-height:44px}
+  .st__addr{font-size:clamp(24px,7.4vw,34px);overflow-wrap:anywhere}
+  .h2{overflow-wrap:anywhere}
+  .faq__q{min-height:56px;padding:16px 18px;font-size:17px}
+}
+@media (max-width:400px){
+  .foot__cities{grid-template-columns:1fr}
+  .zc__price{font-size:44px}
+}
+.cx__tile{min-width:0}
+@media (max-width:760px){.mbar{grid-template-columns:1fr 1fr 2fr}.mbar__main span{white-space:nowrap}}
+@media (max-width:359px){.cx__grid{grid-template-columns:1fr}.cx__tile--extra{grid-column:auto}.mbar__main{font-size:13px!important}}

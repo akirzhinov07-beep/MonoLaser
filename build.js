@@ -285,7 +285,7 @@ ${header(c)}
   </div>
   <div class="wrap hero__in">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">${site.brand}</a><span aria-hidden="true">/</span><span>${esc(c.name)}</span></nav>
-    <h1 class="hero__h" data-laser>Лазерная эпиляция ${esc(c.in).replace(' ', ' ')}<span class="laser" aria-hidden="true"></span></h1>
+    <h1 class="hero__h" data-laser>Лазерная эпиляция ${esc(c.in)}<span class="laser" aria-hidden="true"></span></h1>
     <p class="hero__lead" data-enter>${lead}${c.former_name ? `<br><span class="hero__former">Раньше — ${esc(c.former_name)}. Те же мастера, новое имя.</span>` : ''}</p>
     <div class="hero__cta" data-enter>
       <a class="btn btn--ink btn--lg js-book" href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Записаться онлайн</a>
