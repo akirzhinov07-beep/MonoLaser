@@ -1,8 +1,7 @@
 {
   "_help": "Единственный файл, который нужно править. TODO — заглушки. После правки: node build.js",
   "brand": "MONO",
-  "domain": "https://mono-laser.ru",
-  "_domain_todo": "TODO: ваш реальный домен на Спринтхосте, без слэша в конце",
+  "domain": "https://monolaser.ru",
   "yandex_metrika_id": "",
   "yandex_verification": "",
   "_metrika_help": "Номер счётчика Яндекс Метрики и код подтверждения из Яндекс Вебмастера (meta name=yandex-verification content=...). Пусто — не подключается.",
