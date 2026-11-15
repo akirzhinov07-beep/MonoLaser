@@ -113,33 +113,10 @@
   if (savedCard) { savedCard.classList.add('is-saved'); $('.pick__badge', savedCard).hidden = false; }
 
   $$('.js-book').forEach(function (el) { el.addEventListener('click', function () { goal('booking_click'); }); });
-  $$('a[href^="tel:"]').forEach(function (el) { if (!el.closest('#contact')) el.addEventListener('click', function () { goal('phone_click'); }); });
+  $$('a[href^="tel:"]').forEach(function (el) { el.addEventListener('click', function () { goal('phone_click'); }); });
   $$('a[href*="rtext="]').forEach(function (el) { el.addEventListener('click', function () { goal('route_click'); }); });
 
-  // ---------- окно «Связаться» ----------
-  var cs = $('#contact');
-  if (cs && cs.showModal) {
-    var csIn = $('.cs__in', cs);
-    var openCs = function () {
-      cs.showModal(); goal('contact_open');
-      if (window.gsap && !calm) {
-        var mob = matchMedia('(max-width: 760px)').matches;
-        window.gsap.fromTo(csIn, mob ? { yPercent: 100 } : { y: 30, scale: 0.94, autoAlpha: 0 }, mob ? { yPercent: 0, duration: 0.55, ease: 'expo.out' } : { y: 0, scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out(1.6)' });
-        window.gsap.fromTo($$('.cs__opt', cs), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05, delay: 0.12, ease: 'power3.out' });
-      }
-    };
-    var closeCs = function () {
-      if (window.gsap && !calm) window.gsap.to(csIn, { autoAlpha: 0, y: 20, duration: 0.2, ease: 'power2.in', onComplete: function () { cs.close(); window.gsap.set(csIn, { clearProps: 'all' }); } });
-      else cs.close();
-    };
-    $$('.js-contact').forEach(function (b) { b.addEventListener('click', openCs); });
-    $$('[data-close]', cs).forEach(function (b) { b.addEventListener('click', closeCs); });
-    cs.addEventListener('click', function (e) { if (e.target === cs) closeCs(); });
-    cs.addEventListener('cancel', function (e) { e.preventDefault(); closeCs(); });
-    $$('[data-goal]', cs).forEach(function (a) { a.addEventListener('click', function () { goal(a.getAttribute('data-goal')); }); });
-  } else {
-    $$('.js-contact').forEach(function (b) { b.addEventListener('click', function () { var t = $('a[href^="tel:"]'); if (t) location.href = t.href; }); });
-  }
+  $$('a[href*="wa.me/"]').forEach(function (el) { el.addEventListener('click', function () { goal('whatsapp_click'); }); });
 
   // ---------- FAQ ----------
   $$('.faq__q').forEach(function (q) {
