@@ -67,6 +67,9 @@ function mapSrc(c, st) {
 }
 const yaLink = (c, st) => st && st.yandex_org_id ? `https://yandex.ru/maps/org/${st.yandex_org_id}/` : `https://yandex.ru/maps/?text=${enc(`${site.brand} лазерная эпиляция ${c.name}`)}`;
 const addrLine = c => { const r = realStudios(c); return r.length ? r.map(st => st.address).join(' и ') : (c.studios.length > 1 ? `${c.studios.length} студии, адреса скоро` : 'Адрес скоро'); };
+const metroHtml = st => st.metro && !isTodo(st.metro) ? ` <b class="metro">${esc(addrNb(st.metro))}</b>` : '';
+const addrHtml = st => isTodo(st.address) ? 'Адрес скоро' : `${esc(st.address)}${st.metro && !isTodo(st.metro) ? ',' : ''}${metroHtml(st)}`;
+const addrLineHtml = c => { const r = realStudios(c); return r.length ? r.map(addrHtml).join('<br>') : esc(addrLine(c)); };
 const studiosWord = n => n === 1 ? 'студия' : (n < 5 ? 'студии' : 'студий');
 
 // ---------- общие части ----------
@@ -140,7 +143,7 @@ function footer() {
     <ul class="foot__cities">
       ${site.cities.map(c => `<li>
         <a class="foot__city" href="/${c.slug}/">${esc(c.name)}</a>
-        ${c.studios.map(st => `<span>${isTodo(st.address) ? 'Адрес скоро' : esc(st.address)}</span>`).join('')}
+        ${c.studios.map(st => `<span>${addrHtml(st)}</span>`).join('')}
         ${hasPhone(c) ? `<a href="tel:${tel(c.phone)}">${esc(c.phone)}</a>` : ''}
         <a href="${c.instagram}" target="_blank" rel="noopener nofollow">${icon.ig}${esc(c.instagram_handle)}*</a>
         <a href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Онлайн-запись</a>
@@ -260,7 +263,8 @@ function cityPage(c) {
     <div class="st__text">
       ${n > 1 ? `<p class="st__no">Студия ${i + 1}</p>` : ''}
       <h3 class="st__addr">${isTodo(st.address) ? 'Адрес скоро появится' : esc(addrNb(st.address))}</h3>
-      <p class="st__meta">${esc(c.name)}${st.metro && !isTodo(st.metro) ? `, ${esc(st.metro)}` : ''}${isTodo(c.hours) ? '' : ` · ${esc(c.hours)}`}</p>
+      ${metroHtml(st) ? `<p class="st__metro">${metroHtml(st)}</p>` : ''}
+      <p class="st__meta">${esc(c.name)}${isTodo(c.hours) ? '' : ` · ${esc(c.hours)}`}</p>
       ${isTodo(st.directions) ? '' : `<p class="st__dir">${esc(st.directions)}</p>`}
       <div class="st__btns">
         <a class="btn btn--ink" href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}Построить маршрут</a>
@@ -300,7 +304,7 @@ ${header(c)}
       ${hasPhone(c) ? `<a class="btn btn--glass btn--lg js-contact" href="${waUrl(c)}" target="_blank" rel="noopener">${icon.wa}Связаться</a>` : ''}
     </div>
     <ul class="hero__studios" data-enter>
-      ${c.studios.map(st => `<li><a href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}<span>${isTodo(st.address) ? 'Адрес скоро' : esc(st.address)}</span></a></li>`).join('')}
+      ${c.studios.map(st => `<li><a href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}<span>${addrHtml(st)}</span></a></li>`).join('')}
       <li><a href="${c.instagram}" target="_blank" rel="noopener nofollow">${icon.ig}<span>${esc(c.instagram_handle)}*</span></a></li>
     </ul>
   </div>
@@ -358,7 +362,7 @@ ${faqBlock()}
 <section class="sec sec--others" aria-labelledby="h-others">
   <div class="wrap">
     <h2 class="h2" id="h-others" data-split>${site.brand} в других городах</h2>
-    <ul class="rows">${others.map(o => `<li><a class="row" href="/${o.slug}/"><span class="row__name">${esc(o.name)}</span><span class="row__addr">${esc(addrLine(o))}</span><span class="row__from">от ${rub(minPrice(site.price_lists[o.price_list]))}</span></a></li>`).join('')}</ul>
+    <ul class="rows">${others.map(o => `<li><a class="row" href="/${o.slug}/"><span class="row__name">${esc(o.name)}</span><span class="row__addr">${addrLineHtml(o)}</span><span class="row__from">от ${rub(minPrice(site.price_lists[o.price_list]))}</span></a></li>`).join('')}</ul>
   </div>
 </section>
 
@@ -404,7 +408,7 @@ ${header(null)}
       ${site.cities.map(c => `<li><a class="pick__card" href="/${c.slug}/" data-city="${c.slug}">
         <span class="pick__badge" hidden>Вы выбирали</span>
         <span class="pick__name">${esc(c.name)}</span>
-        <span class="pick__addr">${esc(addrLine(c))}</span>
+        <span class="pick__addr">${addrLineHtml(c)}</span>
         <span class="pick__foot"><span class="pick__from">зоны от ${rub(minPrice(site.price_lists[c.price_list]))}</span><span class="pick__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
       </a></li>`).join('')}
     </ul>

@@ -475,3 +475,7 @@ p,li{text-wrap:pretty}
   .hero__cta .js-contact{flex:1 1 100%}
 }
 @media (max-width:1060px){.top__contact{display:none}}
+.metro{font-weight:600;color:var(--ink)}
+.st__metro{font-size:18px;margin-top:-2px}
+.st__metro .metro{font-weight:700}
+.foot__cities .metro{color:var(--ink)}
