@@ -282,6 +282,19 @@
     el.addEventListener('pointerup', up); el.addEventListener('pointerleave', up);
   });
 
+  // ---------- «Записаться онлайн»: блики вразнобой и магнит ----------
+  $$('.btn--ink.js-book, .mbar__main').forEach(function (b, i) { b.style.setProperty('--gd', (1.4 + i * 0.9).toFixed(1) + 's'); });
+  if (isDesktop()) {
+    $$('.btn--lg.js-book').forEach(function (b) {
+      var mx = G.quickTo(b, 'x', { duration: 0.5, ease: 'power3' }), my = G.quickTo(b, 'y', { duration: 0.5, ease: 'power3' });
+      b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); mx((e.clientX - r.left - r.width / 2) * 0.18); my((e.clientY - r.top - r.height / 2) * 0.3); });
+      b.addEventListener('pointerleave', function () { G.to(b, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, 0.35)' }); });
+    });
+  }
+  // появление кнопки в нижней панели — после первого экрана
+  var mbMain = $('.mbar__main');
+  if (mbMain) G.fromTo(mbMain, { yPercent: 100 }, { yPercent: 0, duration: 0.8, delay: 1.2, ease: 'expo.out' });
+
   // ---------- 6. переход: карточка города раскрывается в страницу ----------
   $$('.pick__card').forEach(function (card) {
     card.addEventListener('click', function (e) {
