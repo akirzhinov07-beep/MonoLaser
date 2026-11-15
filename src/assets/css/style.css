@@ -510,3 +510,8 @@ p,li{text-wrap:pretty}
 .mapph__label{position:absolute;left:50%;top:calc(50% + 34px);transform:translateX(-50%);background:#fff;padding:10px 16px;border-radius:14px;font-weight:600;font-size:15px;white-space:nowrap;box-shadow:0 10px 24px -14px rgba(42,32,28,.45);max-width:90%;overflow:hidden;text-overflow:ellipsis}
 @media (prefers-reduced-motion:reduce){.mapph__ring{animation:none}}
 .rv__frame--ph{display:grid;place-items:center;height:260px;padding:24px;text-align:center;font-weight:500;color:var(--ink-2)}
+
+/* Telegram Mini App */
+.tg-bb .mbar{display:none}
+.tg-bb{--mbar:0px}
+.tg-bb .tray{bottom:12px}

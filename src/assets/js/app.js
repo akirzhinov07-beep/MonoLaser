@@ -1,6 +1,14 @@
 (function () {
   'use strict';
   var root = document.documentElement;
+  // ---------- Telegram Mini App: определяем до запуска анимаций ----------
+  var TG = (function () {
+    var h = location.hash || '';
+    var yes = /tgWebApp/.test(h) || !!window.TelegramWebviewProxy || !!window.TelegramWebview;
+    try { if (yes) sessionStorage.setItem('mono_tg', '1'); else yes = sessionStorage.getItem('mono_tg') === '1'; } catch (e) {}
+    return yes;
+  })();
+  if (TG) root.classList.add('tg');
   var G = window.gsap, ST = window.ScrollTrigger;
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var GS = !!(G && ST && !calm);
@@ -64,7 +72,7 @@
 
   // ---------- плавная прокрутка (только компьютер) ----------
   var smoother = null;
-  if (GS && window.ScrollSmoother && isDesktop() && $('#smooth-wrapper')) {
+  if (GS && !TG && window.ScrollSmoother && isDesktop() && $('#smooth-wrapper')) {
     smoother = window.ScrollSmoother.create({ wrapper: '#smooth-wrapper', content: '#smooth-content', smooth: 1.1, effects: false, normalizeScroll: false });
   }
   $$('a[href^="#"]').forEach(function (a) {
@@ -74,6 +82,43 @@
       if (smoother) { e.preventDefault(); smoother.scrollTo(t, true, 'top 70px'); }
     });
   });
+
+  // ---------- Telegram Mini App: цвета, кнопки, ссылки ----------
+  if (TG) {
+    var setupTg = function () {
+      var W = window.Telegram && window.Telegram.WebApp; if (!W) return;
+      var has = function (v) { try { return W.isVersionAtLeast(v); } catch (e) { return false; } };
+      W.ready(); W.expand();
+      if (has('6.1')) { W.setHeaderColor('#F3DFA2'); W.setBackgroundColor('#FFFFFF'); }
+      if (has('7.10') && W.setBottomBarColor) W.setBottomBarColor('#FFFFFF');
+      if (has('7.7') && W.disableVerticalSwipes) W.disableVerticalSwipes();
+      // назад — на выбор города
+      if (has('6.1') && document.body.getAttribute('data-city')) {
+        W.BackButton.show();
+        W.BackButton.onClick(function () { location.href = '/'; });
+      }
+      // внешние ссылки открываем средствами Telegram
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="http"]');
+        if (!a || a.host === location.host) return;
+        e.preventDefault();
+        if (/^https:\/\/t\.me\//.test(a.href)) W.openTelegramLink(a.href); else W.openLink(a.href);
+      }, true);
+      // нижние кнопки Telegram вместо своей панели
+      var book = $('.mbar__main.js-book'), wa = $('.mbar a[href*="wa.me/"]');
+      if (book && W.MainButton) {
+        W.MainButton.setParams({ text: 'Записаться онлайн', color: '#2A201C', text_color: '#FFFFFF', is_visible: true });
+        W.MainButton.onClick(function () { goal('booking_click'); W.openLink(book.href); });
+        if (wa && W.SecondaryButton && has('7.10')) {
+          W.SecondaryButton.setParams({ text: 'Связаться в WhatsApp', color: '#F3DFA2', text_color: '#2A201C', position: 'top', is_visible: true });
+          W.SecondaryButton.onClick(function () { goal('whatsapp_click'); W.openLink(wa.href); });
+        }
+        root.classList.add('tg-bb');
+      }
+    };
+    if (window.Telegram && window.Telegram.WebApp) setupTg();
+    else { var sc = document.createElement('script'); sc.src = 'https://telegram.org/js/telegram-web-app.js'; sc.onload = setupTg; document.head.appendChild(sc); }
+  }
 
   // ---------- шапка ----------
   var top = $('[data-top]'), lastY = 0;
