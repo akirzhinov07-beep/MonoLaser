@@ -44,6 +44,10 @@ const icon = {
   pin: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
   cal: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8"/></svg>',
   bus: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 11h14M8 21v-3M16 21v-3" stroke="currentColor" stroke-width="1.8"/></svg>',
+  chat: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 5h16v11H9l-5 4V5Z"/></svg>',
+  phone: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>',
+  wa: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z"/><path fill="currentColor" d="M9 8.5c.3-.6.6-.6.9-.6h.5c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .4-.1.6l-.4.5c-.1.1-.2.3 0 .5.5.9 1.3 1.7 2.3 2.2.2.1.4.1.5-.1l.5-.6c.2-.2.4-.2.6-.1l1.4.7c.2.1.3.3.3.5 0 .9-.7 1.7-1.6 1.8-2.6.3-6.3-3-6.2-5.6 0-.6.1-1.1.2-1.6Z"/></svg>',
+  tg: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M21 4 3 11l6 2 2 6 3-4 5 4 2-15Z"/><path d="m9 13 8-6" stroke="currentColor" stroke-width="1.8"/></svg>',
   plus: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
 };
 
@@ -57,7 +61,7 @@ function routeUrl(c, st, mode = 'auto') {
   return `https://yandex.ru/maps/?text=${enc(`${site.brand} лазерная эпиляция ${c.name}`)}`;
 }
 function mapSrc(c, st) {
-  if (st.yandex_org_id) return `https://yandex.ru/map-widget/v1/?oid=${st.yandex_org_id}&ol=biz&z=16`;
+  if (st.yandex_org_id && !st.map_by_address) return `https://yandex.ru/map-widget/v1/?oid=${st.yandex_org_id}&ol=biz&z=16`;
   if (st.lat) return `https://yandex.ru/map-widget/v1/?ll=${st.lon},${st.lat}&z=16&pt=${st.lon},${st.lat},pm2dgl`;
   if (!isTodo(st.address)) return `https://yandex.ru/map-widget/v1/?text=${enc(fullAddr(c, st))}&z=16`;
   return `https://yandex.ru/map-widget/v1/?text=${enc(c.name)}&z=12`;
@@ -121,7 +125,7 @@ function header(city) {
     </div>
     ${city ? `<nav class="top__nav" aria-label="Разделы"><a href="#prices">Цены</a><a href="#visit">Как проходит</a><a href="#where">Адреса</a><a href="#reviews">Отзывы</a></nav>` : '<span class="top__gap"></span>'}
     ${city
-      ? `<a class="btn btn--ink btn--sm js-book" href="${city.booking_url}" target="_blank" rel="noopener">Записаться</a>`
+      ? `${hasPhone(city) ? '<button type="button" class="btn btn--line btn--sm js-contact top__contact">Связаться</button>' : ''}<a class="btn btn--ink btn--sm js-book" href="${city.booking_url}" target="_blank" rel="noopener">Записаться</a>`
       : '<a class="btn btn--ink btn--sm" href="#cities">Записаться</a>'}
   </div>
 </header>`;
@@ -156,7 +160,7 @@ function footer() {
 function mobileBar(city) {
   if (!city) return `<div class="mbar mbar--one"><a class="mbar__main" href="#cities">${icon.cal}<span>Выбрать город и записаться</span></a></div>`;
   return `<div class="mbar" role="navigation" aria-label="Быстрые действия">
-  ${hasPhone(city) ? `<a href="tel:${tel(city.phone)}">${icon.ig}<span>Позвонить</span></a>` : `<a href="${city.instagram}" target="_blank" rel="noopener nofollow">${icon.ig}<span>Instagram*</span></a>`}
+  ${hasPhone(city) ? `<button type="button" class="js-contact">${icon.chat}<span>Связаться</span></button>` : `<a href="${city.instagram}" target="_blank" rel="noopener nofollow">${icon.ig}<span>Instagram*</span></a>`}
   <a href="#where">${icon.pin}<span>Адрес</span></a>
   <a class="mbar__main js-book" href="${city.booking_url}" target="_blank" rel="noopener">${icon.cal}<span>Записаться онлайн</span></a>
 </div>`;
@@ -174,6 +178,29 @@ const faqBlock = () => `<section class="sec sec--faq" id="faq" aria-labelledby="
   </div>
 </section>`;
 
+
+
+// ---------- окно «Связаться» ----------
+function contactSheet(c) {
+  if (!hasPhone(c)) return '';
+  const num = tel(c.phone).replace('+', '');
+  const ig = c.instagram_handle.replace('@', '');
+  return `<dialog class="cs" id="contact" aria-labelledby="cs-h">
+  <div class="cs__in">
+    <button type="button" class="cs__x" data-close aria-label="Закрыть">${icon.plus}</button>
+    <p class="cs__h" id="cs-h">Связаться с MONO ${esc(c.in)}</p>
+    <a class="cs__num" href="tel:${tel(c.phone)}">${esc(c.phone)}</a>
+    <ul class="cs__list">
+      <li><a class="cs__opt" href="tel:${tel(c.phone)}" data-goal="phone_click">${icon.phone}<span>Позвонить</span></a></li>
+      <li><a class="cs__opt" href="https://wa.me/${num}" target="_blank" rel="noopener" data-goal="whatsapp_click">${icon.wa}<span>WhatsApp</span></a></li>
+      <li><a class="cs__opt" href="https://t.me/+${num}" target="_blank" rel="noopener" data-goal="telegram_click">${icon.tg}<span>Telegram</span></a></li>
+      <li><a class="cs__opt" href="https://ig.me/m/${ig}" target="_blank" rel="noopener nofollow" data-goal="instagram_click">${icon.ig}<span>Instagram Direct*</span></a></li>
+    </ul>
+    <a class="btn btn--ink btn--block js-book" href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Записаться онлайн</a>
+    <p class="cs__hours">${isTodo(c.hours) ? '' : esc(c.hours)}</p>
+  </div>
+</dialog>`;
+}
 
 // ---------- блок доверия ----------
 function trustBand() {
@@ -290,6 +317,7 @@ ${header(c)}
     <div class="hero__cta" data-enter>
       <a class="btn btn--ink btn--lg js-book" href="${c.booking_url}" target="_blank" rel="noopener">${icon.cal}Записаться онлайн</a>
       <a class="btn btn--glass btn--lg" href="#prices">Смотреть цены</a>
+      ${hasPhone(c) ? `<button type="button" class="btn btn--glass btn--lg js-contact">${icon.chat}Связаться</button>` : ''}
     </div>
     <ul class="hero__studios" data-enter>
       ${c.studios.map(st => `<li><a href="${routeUrl(c, st)}" target="_blank" rel="noopener">${icon.pin}<span>${isTodo(st.address) ? 'Адрес скоро' : esc(st.address)}</span></a></li>`).join('')}
@@ -357,6 +385,7 @@ ${faqBlock()}
 </main>
 ${footer()}
 </div></div>
+${contactSheet(c)}
 ${mobileBar(c)}
 <script src="/assets/js/gsap.min.js" defer></script>
 <script src="/assets/js/app.js" defer></script>

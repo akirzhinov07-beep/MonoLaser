@@ -151,20 +151,21 @@
       "instagram_handle": "@mono_msc",
       "former_name": null,
       "services": "Лазерная эпиляция и косметология",
-      "phone": "",
+      "phone": "+7 (918) 725-16-15",
       "hours": "Ежедневно 09:00–20:00",
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
         {
-          "address": "Садовническая ул., 5",
-          "metro": "м. Новокузнецкая",
-          "directions": "Бьюти-центр «Paradise Place», 3 этаж, кабинет 61.",
+          "address": "Кожевническая ул., 20А, стр. 1",
+          "metro": "",
+          "directions": "",
           "lat": null,
           "lon": null,
           "yandex_org_id": "12152800261",
           "photos": [],
           "rating": "5,0",
-          "ratings_count": 60
+          "ratings_count": 60,
+          "map_by_address": true
         },
         {
           "address": "ул. Большая Семёновская, 28",
@@ -187,7 +188,7 @@
       "instagram_handle": "@mono.mkh",
       "former_name": null,
       "services": "Лазерная эпиляция",
-      "phone": "",
+      "phone": "+7 (928) 511-95-03",
       "hours": "Ежедневно 09:00–20:00",
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
@@ -221,7 +222,7 @@
       "instagram_handle": "@mono.beauty.kasp",
       "former_name": null,
       "services": "Лазерная эпиляция",
-      "phone": "",
+      "phone": "+7 (928) 511-95-03",
       "hours": "Ежедневно 09:00–20:00",
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
@@ -255,7 +256,7 @@
       "instagram_handle": "@mono.nalchik",
       "former_name": null,
       "services": "Лазерная эпиляция",
-      "phone": "",
+      "phone": "+7 (918) 725-16-15",
       "hours": "Ежедневно 09:00–20:00",
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [
@@ -291,7 +292,7 @@
       "instagram_handle": "@mono.vld",
       "former_name": null,
       "services": "Лазерная эпиляция",
-      "phone": "",
+      "phone": "+7 (918) 725-16-15",
       "hours": "Ежедневно 09:00–20:00",
       "hours_schema": "Mo-Su 09:00-20:00",
       "studios": [

@@ -466,3 +466,28 @@ p,li{text-wrap:pretty}
 .cx__tile{min-width:0}
 @media (max-width:760px){.mbar{grid-template-columns:1fr 1fr 2fr}.mbar__main span{white-space:nowrap}}
 @media (max-width:359px){.cx__grid{grid-template-columns:1fr}.cx__tile--extra{grid-column:auto}.mbar__main{font-size:13px!important}}
+
+/* окно «Связаться» */
+.top__contact{margin-left:0}
+.cs{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;margin:0;color:var(--ink)}
+.cs::backdrop{background:rgba(42,32,28,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cs[open]{display:flex;align-items:center;justify-content:center}
+.cs__in{position:relative;width:min(440px,calc(100% - 32px));background:#fff;border-radius:32px;padding:30px 26px 22px;box-shadow:0 40px 80px -30px rgba(42,32,28,.5)}
+.cs__x{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:var(--mist);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.cs__x .i{transform:rotate(45deg)}
+.cs__h{font:600 22px/1.15 var(--display);letter-spacing:-.03em;padding-right:48px}
+.cs__num{display:inline-block;margin-top:8px;font-size:18px;font-weight:500;text-decoration:none;font-variant-numeric:tabular-nums}
+.cs__list{list-style:none;margin:20px 0 16px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cs__opt{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:20px;background:var(--butter-2);text-decoration:none;font-weight:500;min-height:92px;transition:background .2s}
+.cs__opt:hover{background:var(--butter)}
+.cs__list li:nth-child(2) .cs__opt,.cs__list li:nth-child(3) .cs__opt{background:var(--sky-2)}
+.cs__list li:nth-child(2) .cs__opt:hover,.cs__list li:nth-child(3) .cs__opt:hover{background:var(--sky)}
+.cs__opt .i{width:26px;height:26px}
+.cs__hours{margin-top:12px;text-align:center;font-size:14px;color:var(--ink-2)}
+.mbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:500 12px var(--sans);color:var(--ink);background:none;border:0;cursor:pointer}
+@media (max-width:760px){
+  .cs[open]{align-items:flex-end}
+  .cs__in{width:100%;border-radius:28px 28px 0 0;padding:26px 18px calc(18px + env(safe-area-inset-bottom))}
+  .hero__cta .js-contact{flex:1 1 100%}
+}
+@media (max-width:1060px){.top__contact{display:none}}
